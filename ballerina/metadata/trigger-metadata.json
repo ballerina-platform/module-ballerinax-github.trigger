@@ -1,0 +1,993 @@
+{
+  "version": "v1.0",
+  "listeners": [
+    {
+      "id": "$listener",
+      "doc": "Webhook listener that dispatches each inbound GitHub webhook event to the concrete service type matching its event family.",
+      "type": {
+        "name": "Listener"
+      },
+      "services": [
+        "$delete",
+        "$meta",
+        "$workflowDispatch",
+        "$securityAndAnalysis",
+        "$deployKey",
+        "$projectColumn",
+        "$marketplacePurchase",
+        "$branchProtectionConfiguration",
+        "$pullRequest",
+        "$label",
+        "$deployment",
+        "$teamAdd",
+        "$codeScanningAlert",
+        "$membership",
+        "$secretScanningAlert",
+        "$push",
+        "$member",
+        "$repositoryDispatch",
+        "$status",
+        "$repositoryImport",
+        "$personalAccessTokenRequest",
+        "$subIssues",
+        "$repositoryRuleset",
+        "$milestone",
+        "$public",
+        "$workflowRun",
+        "$projectsV2statusUpdate",
+        "$projectsV2item",
+        "$sponsorship",
+        "$mergeGroup",
+        "$project",
+        "$orgBlock",
+        "$secretScanningAlertLocation",
+        "$installationTarget",
+        "$checkSuite",
+        "$ping",
+        "$issueComment",
+        "$securityAdvisory",
+        "$package",
+        "$discussion",
+        "$fork",
+        "$pullRequestReview",
+        "$organization",
+        "$issues",
+        "$registryPackage",
+        "$projectsV2",
+        "$repositoryVulnerabilityAlert",
+        "$star",
+        "$create",
+        "$deploymentReview",
+        "$gollum",
+        "$githubAppAuthorization",
+        "$watch",
+        "$team",
+        "$workflowJob",
+        "$release",
+        "$installation",
+        "$commitComment",
+        "$discussionComment",
+        "$branchProtectionRule",
+        "$issueDependencies",
+        "$repository",
+        "$pullRequestReviewComment",
+        "$deploymentProtectionRule",
+        "$customPropertyValues",
+        "$installationRepositories",
+        "$secretScanningScan",
+        "$projectCard",
+        "$checkRun",
+        "$pageBuild",
+        "$customProperty",
+        "$dependabotAlert",
+        "$deploymentStatus",
+        "$repositoryAdvisory",
+        "$pullRequestReviewThread"
+      ],
+      "multipleServicesAllowed": true,
+      "multipleServicesOfSameTypeAllowed": false
+    }
+  ],
+  "serviceTypes": [
+    {
+      "id": "$delete",
+      "doc": "Receives GitHub delete events.",
+      "type": {
+        "name": "DeleteService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$meta",
+      "doc": "Receives GitHub meta events: deleted.",
+      "type": {
+        "name": "MetaService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$workflowDispatch",
+      "doc": "Receives GitHub workflow dispatch events.",
+      "type": {
+        "name": "WorkflowDispatchService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$securityAndAnalysis",
+      "doc": "Receives GitHub security and analysis events.",
+      "type": {
+        "name": "SecurityAndAnalysisService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$deployKey",
+      "doc": "Receives GitHub deploy key events: created and deleted.",
+      "type": {
+        "name": "DeployKeyService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$projectColumn",
+      "doc": "Receives GitHub project column events: moved, edited, deleted, and created.",
+      "type": {
+        "name": "ProjectColumnService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$marketplacePurchase",
+      "doc": "Receives GitHub marketplace purchase events: purchased, cancelled, pending change cancelled, pending change, and changed.",
+      "type": {
+        "name": "MarketplacePurchaseService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$branchProtectionConfiguration",
+      "doc": "Receives GitHub branch protection configuration events: enabled and disabled.",
+      "type": {
+        "name": "BranchProtectionConfigurationService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$pullRequest",
+      "doc": "Receives GitHub pull request events: enqueued, review request removed, opened, ready for review, labeled, unassigned, edited, synchronize, review requested, reopened, auto merge disabled, locked, auto merge enabled, milestoned, dequeued, unlabeled, closed, unlocked, assigned, converted to draft, and demilestoned.",
+      "type": {
+        "name": "PullRequestService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$label",
+      "doc": "Receives GitHub label events: edited, created, and deleted.",
+      "type": {
+        "name": "LabelService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$deployment",
+      "doc": "Receives GitHub deployment events: created.",
+      "type": {
+        "name": "DeploymentService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$teamAdd",
+      "doc": "Receives GitHub team add events.",
+      "type": {
+        "name": "TeamAddService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$codeScanningAlert",
+      "doc": "Receives GitHub code scanning alert events: appeared in branch, closed by user, created, fixed, reopened, reopened by user, and updated assignment.",
+      "type": {
+        "name": "CodeScanningAlertService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$membership",
+      "doc": "Receives GitHub membership events: added and removed.",
+      "type": {
+        "name": "MembershipService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$secretScanningAlert",
+      "doc": "Receives GitHub secret scanning alert events: assigned, reopened, unassigned, created, publicly leaked, validated, and resolved.",
+      "type": {
+        "name": "SecretScanningAlertService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$push",
+      "doc": "Receives GitHub push events.",
+      "type": {
+        "name": "PushService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$member",
+      "doc": "Receives GitHub member events: edited, added, and removed.",
+      "type": {
+        "name": "MemberService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$repositoryDispatch",
+      "doc": "Receives GitHub repository dispatch events.",
+      "type": {
+        "name": "RepositoryDispatchService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$status",
+      "doc": "Receives GitHub status events.",
+      "type": {
+        "name": "StatusService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$repositoryImport",
+      "doc": "Receives GitHub repository import events.",
+      "type": {
+        "name": "RepositoryImportService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$personalAccessTokenRequest",
+      "doc": "Receives GitHub personal access token request events: created, approved, denied, and cancelled.",
+      "type": {
+        "name": "PersonalAccessTokenRequestService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$subIssues",
+      "doc": "Receives GitHub sub issues events: sub issue added, parent issue added, sub issue removed, and parent issue removed.",
+      "type": {
+        "name": "SubIssuesService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$repositoryRuleset",
+      "doc": "Receives GitHub repository ruleset events: created, edited, and deleted.",
+      "type": {
+        "name": "RepositoryRulesetService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$milestone",
+      "doc": "Receives GitHub milestone events: created, edited, opened, deleted, and closed.",
+      "type": {
+        "name": "MilestoneService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$public",
+      "doc": "Receives GitHub public events.",
+      "type": {
+        "name": "PublicService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$workflowRun",
+      "doc": "Receives GitHub workflow run events: in progress, completed, and requested.",
+      "type": {
+        "name": "WorkflowRunService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$projectsV2statusUpdate",
+      "doc": "Receives GitHub projects v2status update events: Projects v2 status update edited, Projects v2 status update deleted, and Projects v2 status update created.",
+      "type": {
+        "name": "ProjectsV2statusUpdateService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$projectsV2item",
+      "doc": "Receives GitHub projects v2item events: Projects v2 item edited, Projects v2 item created, Projects v2 item archived, Projects v2 item deleted, Projects v2 item restored, Projects v2 item reordered, and Projects v2 item converted.",
+      "type": {
+        "name": "ProjectsV2itemService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$sponsorship",
+      "doc": "Receives GitHub sponsorship events: cancelled, edited, tier changed, pending cancellation, created, and pending tier change.",
+      "type": {
+        "name": "SponsorshipService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$mergeGroup",
+      "doc": "Receives GitHub merge group events: destroyed and checks requested.",
+      "type": {
+        "name": "MergeGroupService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$project",
+      "doc": "Receives GitHub project events: deleted, created, closed, reopened, and edited.",
+      "type": {
+        "name": "ProjectService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$orgBlock",
+      "doc": "Receives GitHub org block events: blocked and unblocked.",
+      "type": {
+        "name": "OrgBlockService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$secretScanningAlertLocation",
+      "doc": "Receives GitHub secret scanning alert location events.",
+      "type": {
+        "name": "SecretScanningAlertLocationService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$installationTarget",
+      "doc": "Receives GitHub installation target events: renamed.",
+      "type": {
+        "name": "InstallationTargetService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$checkSuite",
+      "doc": "Receives GitHub check suite events: completed, requested, and rerequested.",
+      "type": {
+        "name": "CheckSuiteService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$ping",
+      "doc": "Receives GitHub ping events.",
+      "type": {
+        "name": "PingService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$issueComment",
+      "doc": "Receives GitHub issue comment events: edited, pinned, deleted, created, and unpinned.",
+      "type": {
+        "name": "IssueCommentService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$securityAdvisory",
+      "doc": "Receives GitHub security advisory events: withdrawn, published, and updated.",
+      "type": {
+        "name": "SecurityAdvisoryService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$package",
+      "doc": "Receives GitHub package events: published and updated.",
+      "type": {
+        "name": "PackageService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$discussion",
+      "doc": "Receives GitHub discussion events: unanswered, created, transferred, category changed, deleted, unlocked, pinned, edited, reopened, answered, closed, unlabeled, labeled, unpinned, and locked.",
+      "type": {
+        "name": "DiscussionService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$fork",
+      "doc": "Receives GitHub fork events.",
+      "type": {
+        "name": "ForkService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$pullRequestReview",
+      "doc": "Receives GitHub pull request review events: submitted, edited, and dismissed.",
+      "type": {
+        "name": "PullRequestReviewService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$organization",
+      "doc": "Receives GitHub organization events: member added, member removed, deleted, renamed, and member invited.",
+      "type": {
+        "name": "OrganizationService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$issues",
+      "doc": "Receives GitHub issues events: reopened, transferred, unpinned, assigned, milestoned, labeled, opened, pinned, typed, edited, untyped, demilestoned, locked, unassigned, unlocked, unlabeled, closed, and deleted.",
+      "type": {
+        "name": "IssuesService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$registryPackage",
+      "doc": "Receives GitHub registry package events: updated and published.",
+      "type": {
+        "name": "RegistryPackageService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$projectsV2",
+      "doc": "Receives GitHub projects v2 events: created, edited, closed, reopened, and deleted.",
+      "type": {
+        "name": "ProjectsV2Service"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$repositoryVulnerabilityAlert",
+      "doc": "Receives GitHub repository vulnerability alert events: resolve, reopen, dismiss, and create.",
+      "type": {
+        "name": "RepositoryVulnerabilityAlertService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$star",
+      "doc": "Receives GitHub star events: created and deleted.",
+      "type": {
+        "name": "StarService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$create",
+      "doc": "Receives GitHub create events.",
+      "type": {
+        "name": "CreateService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$deploymentReview",
+      "doc": "Receives GitHub deployment review events: requested, rejected, and approved.",
+      "type": {
+        "name": "DeploymentReviewService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$gollum",
+      "doc": "Receives GitHub gollum events.",
+      "type": {
+        "name": "GollumService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$githubAppAuthorization",
+      "doc": "Receives GitHub github app authorization events: revoked.",
+      "type": {
+        "name": "GithubAppAuthorizationService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$watch",
+      "doc": "Receives GitHub watch events: started.",
+      "type": {
+        "name": "WatchService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$team",
+      "doc": "Receives GitHub team events: created, deleted, edited, added to repository, and removed from repository.",
+      "type": {
+        "name": "TeamService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$workflowJob",
+      "doc": "Receives GitHub workflow job events: queued, waiting, completed, and in progress.",
+      "type": {
+        "name": "WorkflowJobService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$release",
+      "doc": "Receives GitHub release events: created, published, released, prereleased, unpublished, deleted, and edited.",
+      "type": {
+        "name": "ReleaseService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$installation",
+      "doc": "Receives GitHub installation events: new permissions accepted, suspend, created, deleted, and unsuspend.",
+      "type": {
+        "name": "InstallationService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$commitComment",
+      "doc": "Receives GitHub commit comment events: created.",
+      "type": {
+        "name": "CommitCommentService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$discussionComment",
+      "doc": "Receives GitHub discussion comment events: deleted, created, and edited.",
+      "type": {
+        "name": "DiscussionCommentService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$branchProtectionRule",
+      "doc": "Receives GitHub branch protection rule events: deleted, edited, and created.",
+      "type": {
+        "name": "BranchProtectionRuleService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$issueDependencies",
+      "doc": "Receives GitHub issue dependencies events: blocking removed, blocked by removed, blocking added, and blocked by added.",
+      "type": {
+        "name": "IssueDependenciesService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$repository",
+      "doc": "Receives GitHub repository events: privatized, created, renamed, transferred, edited, deleted, archived, publicized, and unarchived.",
+      "type": {
+        "name": "RepositoryService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$pullRequestReviewComment",
+      "doc": "Receives GitHub pull request review comment events: created, deleted, and edited.",
+      "type": {
+        "name": "PullRequestReviewCommentService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$deploymentProtectionRule",
+      "doc": "Receives GitHub deployment protection rule events.",
+      "type": {
+        "name": "DeploymentProtectionRuleService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$customPropertyValues",
+      "doc": "Receives GitHub custom property values events: updated.",
+      "type": {
+        "name": "CustomPropertyValuesService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$installationRepositories",
+      "doc": "Receives GitHub installation repositories events: removed and added.",
+      "type": {
+        "name": "InstallationRepositoriesService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$secretScanningScan",
+      "doc": "Receives GitHub secret scanning scan events.",
+      "type": {
+        "name": "SecretScanningScanService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$projectCard",
+      "doc": "Receives GitHub project card events: edited, deleted, moved, converted, and created.",
+      "type": {
+        "name": "ProjectCardService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$checkRun",
+      "doc": "Receives GitHub check run events: created, completed, requested action, and rerequested.",
+      "type": {
+        "name": "CheckRunService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$pageBuild",
+      "doc": "Receives GitHub page build events.",
+      "type": {
+        "name": "PageBuildService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$customProperty",
+      "doc": "Receives GitHub custom property events: updated, deleted, promote to enterprise, and created.",
+      "type": {
+        "name": "CustomPropertyService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$dependabotAlert",
+      "doc": "Receives GitHub dependabot alert events: auto dismissed, auto reopened, created, dismissed, reopened, reintroduced, assignees changed, and fixed.",
+      "type": {
+        "name": "DependabotAlertService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$deploymentStatus",
+      "doc": "Receives GitHub deployment status events: created.",
+      "type": {
+        "name": "DeploymentStatusService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$repositoryAdvisory",
+      "doc": "Receives GitHub repository advisory events: reported and published.",
+      "type": {
+        "name": "RepositoryAdvisoryService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    },
+    {
+      "id": "$pullRequestReviewThread",
+      "doc": "Receives GitHub pull request review thread events: unresolved and resolved.",
+      "type": {
+        "name": "PullRequestReviewThreadService"
+      },
+      "concrete": true,
+      "multipleListenersAllowed": true,
+      "handlers": {
+        "backedByConcreteType": true
+      }
+    }
+  ]
+}

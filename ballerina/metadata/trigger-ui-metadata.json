@@ -1,0 +1,1820 @@
+{
+  "version": "v1.0",
+  "metadata": {
+    "kind": "event"
+  },
+  "trigger": {
+    "displayName": "GitHub Event Integration",
+    "description": "Create a service to handle webhook events from GitHub",
+    "type": "github"
+  },
+  "initForm": {
+    "fields": [
+      {
+        "target": {
+          "kind": "recordField",
+          "owner": "trigger.initProperties",
+          "path": "serviceType"
+        },
+        "metadata": {
+          "label": "Event Channel",
+          "description": "The type of GitHub webhook event to listen for"
+        },
+        "source": {
+          "construct": {
+            "kind": "SERVICE_TYPE_DESCRIPTOR"
+          },
+          "module": {
+            "name": "github"
+          }
+        },
+        "state": {
+          "enabled": true,
+          "editable": true,
+          "optional": false,
+          "advanced": false
+        },
+        "key": "serviceType",
+        "default": "github:PushService"
+      }
+    ]
+  },
+  "listeners": [
+    {
+      "target": "$listener",
+      "form": {
+        "section": {
+          "label": "Listener",
+          "description": "Attach the service to a new or existing GitHub webhook listener."
+        },
+        "createNew": {
+          "label": "Create New Listener",
+          "description": "Define a new GitHub webhook listener in the project."
+        },
+        "listenerConfig": {
+          "label": "Listener Configurations",
+          "description": "Configure the GitHub webhook listener."
+        },
+        "useExisting": {
+          "label": "Use Existing Listener",
+          "description": "Attach to a GitHub listener already declared in the project."
+        },
+        "existingListener": {
+          "label": "Listener",
+          "description": "Select an existing listener to attach the service to."
+        },
+        "existingListenerItems": [
+          "githubListener"
+        ],
+        "existingListenerValue": "githubListener"
+      },
+      "formFields": {
+        "listenerVarName": {
+          "key": "listenerVarName",
+          "default": "githubListener",
+          "metadata": {
+            "label": "Listener Name",
+            "description": "Provide a name for the listener being created"
+          },
+          "source": {
+            "construct": {
+              "kind": "LISTENER_VAR_NAME"
+            }
+          },
+          "state": {
+            "enabled": true,
+            "editable": true,
+            "optional": false,
+            "advanced": false
+          }
+        },
+        "listenOn": {
+          "key": "listenOn",
+          "placeholder": "8090",
+          "default": "8090",
+          "metadata": {
+            "label": "Webhook Listener Port",
+            "description": "The port on which the webhook listener accepts incoming HTTP requests"
+          },
+          "source": {
+            "argument": {
+              "kind": "LISTENER_PARAM_REQUIRED",
+              "position": 2,
+              "originalName": "listenOn"
+            }
+          },
+          "state": {
+            "enabled": true,
+            "editable": true,
+            "optional": true,
+            "advanced": false
+          }
+        },
+        "listenerConfigFallback": {
+          "key": "listenerConfigFallback",
+          "default": "{}",
+          "metadata": {
+            "label": "Listener Config",
+            "description": "Fallback empty value for the listener config record when no fields under it are set."
+          },
+          "source": {
+            "argument": {
+              "kind": "LISTENER_PARAM_REQUIRED",
+              "position": 1,
+              "originalName": "listenerConfig"
+            }
+          },
+          "state": {
+            "enabled": true,
+            "editable": false,
+            "optional": true,
+            "advanced": true,
+            "hidden": true
+          }
+        },
+        "webhookSecret": {
+          "key": "webhookSecret",
+          "placeholder": "",
+          "default": "",
+          "metadata": {
+            "label": "Webhook Secret",
+            "description": "Secret used to validate incoming GitHub webhook requests"
+          },
+          "source": {
+            "argument": {
+              "kind": "LISTENER_PARAM_CONFIG_FIELD",
+              "originalName": "webhookSecret",
+              "position": 1
+            },
+            "path": "webhookSecret"
+          },
+          "state": {
+            "enabled": true,
+            "editable": true,
+            "optional": true,
+            "advanced": false
+          }
+        }
+      }
+    }
+  ],
+  "serviceTypes": [
+    {
+      "target": "$delete",
+      "metadata": {
+        "label": "Delete",
+        "description": "Triggered when an event related to GitHub delete is received. Available actions: onDelete."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "DeleteService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$meta",
+      "metadata": {
+        "label": "Meta",
+        "description": "Triggered when an event related to GitHub meta is received. Available actions: onMetaDeleted."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "MetaService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$workflowDispatch",
+      "metadata": {
+        "label": "Workflow Dispatch",
+        "description": "Triggered when an event related to GitHub workflow dispatch is received. Available actions: onWorkflowDispatch."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "WorkflowDispatchService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$securityAndAnalysis",
+      "metadata": {
+        "label": "Security And Analysis",
+        "description": "Triggered when an event related to GitHub security and analysis is received. Available actions: onSecurityAndAnalysis."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "SecurityAndAnalysisService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$deployKey",
+      "metadata": {
+        "label": "Deploy Key",
+        "description": "Triggered when an event related to GitHub deploy key is received. Available actions: onDeployKeyCreated and onDeployKeyDeleted."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "DeployKeyService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$projectColumn",
+      "metadata": {
+        "label": "Project Column",
+        "description": "Triggered when an event related to GitHub project column is received. Available actions: onProjectColumnMoved, onProjectColumnEdited, onProjectColumnDeleted, and onProjectColumnCreated."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "ProjectColumnService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$marketplacePurchase",
+      "metadata": {
+        "label": "Marketplace Purchase",
+        "description": "Triggered when an event related to GitHub marketplace purchase is received. Available actions: onMarketplacePurchasePurchased, onMarketplacePurchaseCancelled, onMarketplacePurchasePendingChangeCancelled, onMarketplacePurchasePendingChange, and onMarketplacePurchaseChanged."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "MarketplacePurchaseService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$branchProtectionConfiguration",
+      "metadata": {
+        "label": "Branch Protection Configuration",
+        "description": "Triggered when an event related to GitHub branch protection configuration is received. Available actions: onBranchProtectionConfigurationEnabled and onBranchProtectionConfigurationDisabled."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "BranchProtectionConfigurationService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$pullRequest",
+      "metadata": {
+        "label": "Pull Request",
+        "description": "Triggered when an event related to GitHub pull request is received. Available actions: onPullRequestEnqueued, onPullRequestReviewRequestRemoved, onPullRequestOpened, onPullRequestReadyForReview, onPullRequestLabeled, onPullRequestUnassigned, onPullRequestEdited, onPullRequestSynchronize, onPullRequestReviewRequested, onPullRequestReopened, onPullRequestAutoMergeDisabled, onPullRequestLocked, onPullRequestAutoMergeEnabled, onPullRequestMilestoned, onPullRequestDequeued, onPullRequestUnlabeled, onPullRequestClosed, onPullRequestUnlocked, onPullRequestAssigned, onPullRequestConvertedToDraft, and onPullRequestDemilestoned."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "PullRequestService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$label",
+      "metadata": {
+        "label": "Label",
+        "description": "Triggered when an event related to GitHub label is received. Available actions: onLabelEdited, onLabelCreated, and onLabelDeleted."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "LabelService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$deployment",
+      "metadata": {
+        "label": "Deployment",
+        "description": "Triggered when an event related to GitHub deployment is received. Available actions: onDeploymentCreated."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "DeploymentService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$teamAdd",
+      "metadata": {
+        "label": "Team Add",
+        "description": "Triggered when an event related to GitHub team add is received. Available actions: onTeamAdd."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "TeamAddService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$codeScanningAlert",
+      "metadata": {
+        "label": "Code Scanning Alert",
+        "description": "Triggered when an event related to GitHub code scanning alert is received. Available actions: onCodeScanningAlertAppearedInBranch, onCodeScanningAlertClosedByUser, onCodeScanningAlertCreated, onCodeScanningAlertFixed, onCodeScanningAlertReopened, onCodeScanningAlertReopenedByUser, and onCodeScanningAlertUpdatedAssignment."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "CodeScanningAlertService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$membership",
+      "metadata": {
+        "label": "Membership",
+        "description": "Triggered when an event related to GitHub membership is received. Available actions: onMembershipAdded and onMembershipRemoved."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "MembershipService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$secretScanningAlert",
+      "metadata": {
+        "label": "Secret Scanning Alert",
+        "description": "Triggered when an event related to GitHub secret scanning alert is received. Available actions: onSecretScanningAlertAssigned, onSecretScanningAlertReopened, onSecretScanningAlertUnassigned, onSecretScanningAlertCreated, onSecretScanningAlertPubliclyLeaked, onSecretScanningAlertValidated, and onSecretScanningAlertResolved."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "SecretScanningAlertService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$push",
+      "metadata": {
+        "label": "Push",
+        "description": "Triggered when an event related to GitHub push is received. Available actions: onPush."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "PushService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": true,
+        "editable": true
+      }
+    },
+    {
+      "target": "$member",
+      "metadata": {
+        "label": "Member",
+        "description": "Triggered when an event related to GitHub member is received. Available actions: onMemberEdited, onMemberAdded, and onMemberRemoved."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "MemberService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$repositoryDispatch",
+      "metadata": {
+        "label": "Repository Dispatch",
+        "description": "Triggered when an event related to GitHub repository dispatch is received. Available actions: onRepositoryDispatch."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "RepositoryDispatchService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$status",
+      "metadata": {
+        "label": "Status",
+        "description": "Triggered when an event related to GitHub status is received. Available actions: onStatus."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "StatusService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$repositoryImport",
+      "metadata": {
+        "label": "Repository Import",
+        "description": "Triggered when an event related to GitHub repository import is received. Available actions: onRepositoryImport."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "RepositoryImportService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$personalAccessTokenRequest",
+      "metadata": {
+        "label": "Personal Access Token Request",
+        "description": "Triggered when an event related to GitHub personal access token request is received. Available actions: onPersonalAccessTokenRequestCreated, onPersonalAccessTokenRequestApproved, onPersonalAccessTokenRequestDenied, and onPersonalAccessTokenRequestCancelled."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "PersonalAccessTokenRequestService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$subIssues",
+      "metadata": {
+        "label": "Sub Issues",
+        "description": "Triggered when an event related to GitHub sub issues is received. Available actions: onSubIssuesSubIssueAdded, onSubIssuesParentIssueAdded, onSubIssuesSubIssueRemoved, and onSubIssuesParentIssueRemoved."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "SubIssuesService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$repositoryRuleset",
+      "metadata": {
+        "label": "Repository Ruleset",
+        "description": "Triggered when an event related to GitHub repository ruleset is received. Available actions: onRepositoryRulesetCreated, onRepositoryRulesetEdited, and onRepositoryRulesetDeleted."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "RepositoryRulesetService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$milestone",
+      "metadata": {
+        "label": "Milestone",
+        "description": "Triggered when an event related to GitHub milestone is received. Available actions: onMilestoneCreated, onMilestoneEdited, onMilestoneOpened, onMilestoneDeleted, and onMilestoneClosed."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "MilestoneService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$public",
+      "metadata": {
+        "label": "Public",
+        "description": "Triggered when an event related to GitHub public is received. Available actions: onPublic."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "PublicService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$workflowRun",
+      "metadata": {
+        "label": "Workflow Run",
+        "description": "Triggered when an event related to GitHub workflow run is received. Available actions: onWorkflowRunInProgress, onWorkflowRunCompleted, and onWorkflowRunRequested."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "WorkflowRunService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$projectsV2statusUpdate",
+      "metadata": {
+        "label": "Projects V2status Update",
+        "description": "Triggered when an event related to GitHub projects v2status update is received. Available actions: onProjectsV2StatusUpdateEdited, onProjectsV2StatusUpdateDeleted, and onProjectsV2StatusUpdateCreated."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "ProjectsV2statusUpdateService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$projectsV2item",
+      "metadata": {
+        "label": "Projects V2item",
+        "description": "Triggered when an event related to GitHub projects v2item is received. Available actions: onProjectsV2ItemEdited, onProjectsV2ItemCreated, onProjectsV2ItemArchived, onProjectsV2ItemDeleted, onProjectsV2ItemRestored, onProjectsV2ItemReordered, and onProjectsV2ItemConverted."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "ProjectsV2itemService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$sponsorship",
+      "metadata": {
+        "label": "Sponsorship",
+        "description": "Triggered when an event related to GitHub sponsorship is received. Available actions: onSponsorshipCancelled, onSponsorshipEdited, onSponsorshipTierChanged, onSponsorshipPendingCancellation, onSponsorshipCreated, and onSponsorshipPendingTierChange."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "SponsorshipService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$mergeGroup",
+      "metadata": {
+        "label": "Merge Group",
+        "description": "Triggered when an event related to GitHub merge group is received. Available actions: onMergeGroupDestroyed and onMergeGroupChecksRequested."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "MergeGroupService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$project",
+      "metadata": {
+        "label": "Project",
+        "description": "Triggered when an event related to GitHub project is received. Available actions: onProjectDeleted, onProjectCreated, onProjectClosed, onProjectReopened, and onProjectEdited."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "ProjectService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$orgBlock",
+      "metadata": {
+        "label": "Org Block",
+        "description": "Triggered when an event related to GitHub org block is received. Available actions: onOrgBlockBlocked and onOrgBlockUnblocked."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "OrgBlockService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$secretScanningAlertLocation",
+      "metadata": {
+        "label": "Secret Scanning Alert Location",
+        "description": "Triggered when an event related to GitHub secret scanning alert location is received. Available actions: onSecretScanningAlertLocation."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "SecretScanningAlertLocationService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$installationTarget",
+      "metadata": {
+        "label": "Installation Target",
+        "description": "Triggered when an event related to GitHub installation target is received. Available actions: onInstallationTargetRenamed."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "InstallationTargetService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$checkSuite",
+      "metadata": {
+        "label": "Check Suite",
+        "description": "Triggered when an event related to GitHub check suite is received. Available actions: onCheckSuiteCompleted, onCheckSuiteRequested, and onCheckSuiteRerequested."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "CheckSuiteService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$ping",
+      "metadata": {
+        "label": "Ping",
+        "description": "Triggered when an event related to GitHub ping is received. Available actions: onPing."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "PingService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$issueComment",
+      "metadata": {
+        "label": "Issue Comment",
+        "description": "Triggered when an event related to GitHub issue comment is received. Available actions: onIssueCommentEdited, onIssueCommentPinned, onIssueCommentDeleted, onIssueCommentCreated, and onIssueCommentUnpinned."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "IssueCommentService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$securityAdvisory",
+      "metadata": {
+        "label": "Security Advisory",
+        "description": "Triggered when an event related to GitHub security advisory is received. Available actions: onSecurityAdvisoryWithdrawn, onSecurityAdvisoryPublished, and onSecurityAdvisoryUpdated."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "SecurityAdvisoryService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$package",
+      "metadata": {
+        "label": "Package",
+        "description": "Triggered when an event related to GitHub package is received. Available actions: onPackagePublished and onPackageUpdated."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "PackageService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$discussion",
+      "metadata": {
+        "label": "Discussion",
+        "description": "Triggered when an event related to GitHub discussion is received. Available actions: onDiscussionUnanswered, onDiscussionCreated, onDiscussionTransferred, onDiscussionCategoryChanged, onDiscussionDeleted, onDiscussionUnlocked, onDiscussionPinned, onDiscussionEdited, onDiscussionReopened, onDiscussionAnswered, onDiscussionClosed, onDiscussionUnlabeled, onDiscussionLabeled, onDiscussionUnpinned, and onDiscussionLocked."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "DiscussionService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$fork",
+      "metadata": {
+        "label": "Fork",
+        "description": "Triggered when an event related to GitHub fork is received. Available actions: onFork."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "ForkService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$pullRequestReview",
+      "metadata": {
+        "label": "Pull Request Review",
+        "description": "Triggered when an event related to GitHub pull request review is received. Available actions: onPullRequestReviewSubmitted, onPullRequestReviewEdited, and onPullRequestReviewDismissed."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "PullRequestReviewService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$organization",
+      "metadata": {
+        "label": "Organization",
+        "description": "Triggered when an event related to GitHub organization is received. Available actions: onOrganizationMemberAdded, onOrganizationMemberRemoved, onOrganizationDeleted, onOrganizationRenamed, and onOrganizationMemberInvited."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "OrganizationService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$issues",
+      "metadata": {
+        "label": "Issues",
+        "description": "Triggered when an event related to GitHub issues is received. Available actions: onIssuesReopened, onIssuesTransferred, onIssuesUnpinned, onIssuesAssigned, onIssuesMilestoned, onIssuesLabeled, onIssuesOpened, onIssuesPinned, onIssuesTyped, onIssuesEdited, onIssuesUntyped, onIssuesDemilestoned, onIssuesLocked, onIssuesUnassigned, onIssuesUnlocked, onIssuesUnlabeled, onIssuesClosed, and onIssuesDeleted."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "IssuesService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$registryPackage",
+      "metadata": {
+        "label": "Registry Package",
+        "description": "Triggered when an event related to GitHub registry package is received. Available actions: onRegistryPackageUpdated and onRegistryPackagePublished."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "RegistryPackageService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$projectsV2",
+      "metadata": {
+        "label": "Projects V2",
+        "description": "Triggered when an event related to GitHub projects v2 is received. Available actions: onProjectsV2Created, onProjectsV2Edited, onProjectsV2Closed, onProjectsV2Reopened, and onProjectsV2Deleted."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "ProjectsV2Service"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$repositoryVulnerabilityAlert",
+      "metadata": {
+        "label": "Repository Vulnerability Alert",
+        "description": "Triggered when an event related to GitHub repository vulnerability alert is received. Available actions: onRepositoryVulnerabilityAlertResolve, onRepositoryVulnerabilityAlertReopen, onRepositoryVulnerabilityAlertDismiss, and onRepositoryVulnerabilityAlertCreate."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "RepositoryVulnerabilityAlertService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$star",
+      "metadata": {
+        "label": "Star",
+        "description": "Triggered when an event related to GitHub star is received. Available actions: onStarCreated and onStarDeleted."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "StarService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$create",
+      "metadata": {
+        "label": "Create",
+        "description": "Triggered when an event related to GitHub create is received. Available actions: onCreate."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "CreateService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$deploymentReview",
+      "metadata": {
+        "label": "Deployment Review",
+        "description": "Triggered when an event related to GitHub deployment review is received. Available actions: onDeploymentReviewRequested, onDeploymentReviewRejected, and onDeploymentReviewApproved."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "DeploymentReviewService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$gollum",
+      "metadata": {
+        "label": "Gollum",
+        "description": "Triggered when an event related to GitHub gollum is received. Available actions: onGollum."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "GollumService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$githubAppAuthorization",
+      "metadata": {
+        "label": "Github App Authorization",
+        "description": "Triggered when an event related to GitHub github app authorization is received. Available actions: onGithubAppAuthorizationRevoked."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "GithubAppAuthorizationService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$watch",
+      "metadata": {
+        "label": "Watch",
+        "description": "Triggered when an event related to GitHub watch is received. Available actions: onWatchStarted."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "WatchService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$team",
+      "metadata": {
+        "label": "Team",
+        "description": "Triggered when an event related to GitHub team is received. Available actions: onTeamCreated, onTeamDeleted, onTeamEdited, onTeamAddedToRepository, and onTeamRemovedFromRepository."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "TeamService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$workflowJob",
+      "metadata": {
+        "label": "Workflow Job",
+        "description": "Triggered when an event related to GitHub workflow job is received. Available actions: onWorkflowJobQueued, onWorkflowJobWaiting, onWorkflowJobCompleted, and onWorkflowJobInProgress."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "WorkflowJobService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$release",
+      "metadata": {
+        "label": "Release",
+        "description": "Triggered when an event related to GitHub release is received. Available actions: onReleaseCreated, onReleasePublished, onReleaseReleased, onReleasePrereleased, onReleaseUnpublished, onReleaseDeleted, and onReleaseEdited."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "ReleaseService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$installation",
+      "metadata": {
+        "label": "Installation",
+        "description": "Triggered when an event related to GitHub installation is received. Available actions: onInstallationNewPermissionsAccepted, onInstallationSuspend, onInstallationCreated, onInstallationDeleted, and onInstallationUnsuspend."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "InstallationService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$commitComment",
+      "metadata": {
+        "label": "Commit Comment",
+        "description": "Triggered when an event related to GitHub commit comment is received. Available actions: onCommitCommentCreated."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "CommitCommentService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$discussionComment",
+      "metadata": {
+        "label": "Discussion Comment",
+        "description": "Triggered when an event related to GitHub discussion comment is received. Available actions: onDiscussionCommentDeleted, onDiscussionCommentCreated, and onDiscussionCommentEdited."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "DiscussionCommentService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$branchProtectionRule",
+      "metadata": {
+        "label": "Branch Protection Rule",
+        "description": "Triggered when an event related to GitHub branch protection rule is received. Available actions: onBranchProtectionRuleDeleted, onBranchProtectionRuleEdited, and onBranchProtectionRuleCreated."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "BranchProtectionRuleService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$issueDependencies",
+      "metadata": {
+        "label": "Issue Dependencies",
+        "description": "Triggered when an event related to GitHub issue dependencies is received. Available actions: onIssueDependenciesBlockingRemoved, onIssueDependenciesBlockedByRemoved, onIssueDependenciesBlockingAdded, and onIssueDependenciesBlockedByAdded."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "IssueDependenciesService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$repository",
+      "metadata": {
+        "label": "Repository",
+        "description": "Triggered when an event related to GitHub repository is received. Available actions: onRepositoryPrivatized, onRepositoryCreated, onRepositoryRenamed, onRepositoryTransferred, onRepositoryEdited, onRepositoryDeleted, onRepositoryArchived, onRepositoryPublicized, and onRepositoryUnarchived."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "RepositoryService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$pullRequestReviewComment",
+      "metadata": {
+        "label": "Pull Request Review Comment",
+        "description": "Triggered when an event related to GitHub pull request review comment is received. Available actions: onPullRequestReviewCommentCreated, onPullRequestReviewCommentDeleted, and onPullRequestReviewCommentEdited."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "PullRequestReviewCommentService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$deploymentProtectionRule",
+      "metadata": {
+        "label": "Deployment Protection Rule",
+        "description": "Triggered when an event related to GitHub deployment protection rule is received. Available actions: onDeploymentProtectionRule."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "DeploymentProtectionRuleService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$customPropertyValues",
+      "metadata": {
+        "label": "Custom Property Values",
+        "description": "Triggered when an event related to GitHub custom property values is received. Available actions: onCustomPropertyValuesUpdated."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "CustomPropertyValuesService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$installationRepositories",
+      "metadata": {
+        "label": "Installation Repositories",
+        "description": "Triggered when an event related to GitHub installation repositories is received. Available actions: onInstallationRepositoriesRemoved and onInstallationRepositoriesAdded."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "InstallationRepositoriesService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$secretScanningScan",
+      "metadata": {
+        "label": "Secret Scanning Scan",
+        "description": "Triggered when an event related to GitHub secret scanning scan is received. Available actions: onSecretScanningScan."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "SecretScanningScanService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$projectCard",
+      "metadata": {
+        "label": "Project Card",
+        "description": "Triggered when an event related to GitHub project card is received. Available actions: onProjectCardEdited, onProjectCardDeleted, onProjectCardMoved, onProjectCardConverted, and onProjectCardCreated."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "ProjectCardService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$checkRun",
+      "metadata": {
+        "label": "Check Run",
+        "description": "Triggered when an event related to GitHub check run is received. Available actions: onCheckRunCreated, onCheckRunCompleted, onCheckRunRequestedAction, and onCheckRunRerequested."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "CheckRunService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$pageBuild",
+      "metadata": {
+        "label": "Page Build",
+        "description": "Triggered when an event related to GitHub page build is received. Available actions: onPageBuild."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "PageBuildService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$customProperty",
+      "metadata": {
+        "label": "Custom Property",
+        "description": "Triggered when an event related to GitHub custom property is received. Available actions: onCustomPropertyUpdated, onCustomPropertyDeleted, onCustomPropertyPromoteToEnterprise, and onCustomPropertyCreated."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "CustomPropertyService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$dependabotAlert",
+      "metadata": {
+        "label": "Dependabot Alert",
+        "description": "Triggered when an event related to GitHub dependabot alert is received. Available actions: onDependabotAlertAutoDismissed, onDependabotAlertAutoReopened, onDependabotAlertCreated, onDependabotAlertDismissed, onDependabotAlertReopened, onDependabotAlertReintroduced, onDependabotAlertAssigneesChanged, and onDependabotAlertFixed."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "DependabotAlertService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$deploymentStatus",
+      "metadata": {
+        "label": "Deployment Status",
+        "description": "Triggered when an event related to GitHub deployment status is received. Available actions: onDeploymentStatusCreated."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "DeploymentStatusService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$repositoryAdvisory",
+      "metadata": {
+        "label": "Repository Advisory",
+        "description": "Triggered when an event related to GitHub repository advisory is received. Available actions: onRepositoryAdvisoryReported and onRepositoryAdvisoryPublished."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "RepositoryAdvisoryService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    },
+    {
+      "target": "$pullRequestReviewThread",
+      "metadata": {
+        "label": "Pull Request Review Thread",
+        "description": "Triggered when an event related to GitHub pull request review thread is received. Available actions: onPullRequestReviewThreadUnresolved and onPullRequestReviewThreadResolved."
+      },
+      "source": {
+        "construct": {
+          "kind": "SERVICE_TYPE_DESCRIPTOR"
+        },
+        "argument": {
+          "originalName": "PullRequestReviewThreadService"
+        },
+        "module": {
+          "name": "github"
+        }
+      },
+      "state": {
+        "enabled": false,
+        "editable": true
+      }
+    }
+  ],
+  "artifactInfo": {
+    "displayLabel": "GitHub Event Integration",
+    "icon": {
+      "lightPath": "icons/light.svg",
+      "darkPath": "icons/dark.svg"
+    }
+  }
+}
