@@ -27,7 +27,7 @@ public class Listener {
         if listenOn is http:Listener {
             self.httpListener = listenOn;
         } else {
-            self.httpListener = check new (listenOn, requestLimits = {maxEntityBodySize: 10485760});
+            self.httpListener = check new (listenOn, requestLimits = {maxEntityBodySize: 26214400});
         }
         self.listenerConfig = listenerConfig;
     }
